@@ -1,12 +1,16 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import AppContext from "../contexts/AppContext";
 
 export default function ProtectedRoute({
-  isLoggedIn,
+  // isLoggedIn, // because context is being used
   children,
   anonymous = false,
 }) {
   const location = useLocation();
   const from = location.state?.from || "/";
+
+  const { isLoggedIn } = useContext(AppContext);
   // If you can visit without authorization, but you are already authorized
   if (anonymous && isLoggedIn) {
     // ...then go back the the path you came from
